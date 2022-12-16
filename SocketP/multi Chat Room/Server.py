@@ -76,7 +76,3 @@ def connect_clients():
 #starts server
 print("Server is starting...")
 connect_clients()
-
-
-
-        
