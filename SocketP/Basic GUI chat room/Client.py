@@ -52,11 +52,46 @@ def connect():
 
 def verify_connection(name):
     '''Verify connection to server'''
-    pass
+    global client_socket
+
+    #server sends a name flag
+    flag = client_socket.recv(BYTESIZE).decode(ENCODER)
+    if flag == "NAME":
+        #check
+        client_socket.send(name.encode(ENCODER))
+        message = client_socket.recv(BYTESIZE).decode(ENCODER)
+
+        if message:
+            #server sent verification
+            my_listbox.insert(0, message)
+            #button functions
+            connect_button.config(state=DISABLED)
+            disconnect_button.config(state=NORMAL)
+            send_button.config(state=NORMAL)
+
+            name_entry.config(state=DISABLED)
+            ip_entry.config(state=DISABLED)
+            port_entry.config(state=DISABLED)
+
+            #create a thread to receive constantly messages from server
+            receive_thread = threading.Thread(target=receive_message)
+            receive_thread.start()
+        else:
+            #no verification
+            my_listbox.insert(0, "Connection not verified")
+            client_socket.close()
+
+    else:
+        my_listbox.insert(0, "Connection refused. BYYEEEEE")
+        client_socket.close()
+
+
 
 def disconnect():
     '''Disconnect from server'''
     pass
+
+
 
 def send_message():
     '''Send message to server'''
