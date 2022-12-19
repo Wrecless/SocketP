@@ -14,7 +14,61 @@ black = "black"
 light_green = "green"
 root.config(bg=black)
 
+#define socket consts
+ENCODER = "utf-8"
+BYTESIZE = 1024
+global client_socket
+
+
 #define functions
+def connect():
+    '''Connect to server'''
+    global client_socket
+
+    #clear previous chars
+    my_listbox.delete(0, END)
+
+    #get connection info
+    name = name_entry.get()
+    ip = ip_entry.get()
+    port = port_entry.get()
+
+    #only try to connect if all fields are filled
+    if name and ip and port:
+        #if conditions are meet
+        my_listbox.insert(0, f"{name} is trying to connect to {ip}:{port}")
+
+        #creates cliente socket
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((ip, int(port)))
+
+        #verify connection
+        verify_connection(name)
+    else:
+        #if conditions are not meet
+        my_listbox.insert(0, "Please fill all fields")
+        messagebox.showerror("Error", "Please fill all fields")
+
+
+def verify_connection(name):
+    '''Verify connection to server'''
+    pass
+
+def disconnect():
+    '''Disconnect from server'''
+    pass
+
+def send_message():
+    '''Send message to server'''
+    pass
+
+def receive_message():
+    '''Receive message from server'''
+    pass
+
+def security_check():
+    '''Check for security issues'''
+    pass
 
 #define GUI
 info_frame = tkinter.Frame(root, bg=black)
@@ -30,7 +84,7 @@ ip_label = tkinter.Label(info_frame, text="Host IP: ", font=my_font, bg=black, f
 ip_entry = tkinter.Entry(info_frame, font=my_font, width=20, bg="white")
 port_label = tkinter.Label(info_frame, text="Port num: ", font=my_font, bg=black, fg=light_green)
 port_entry = tkinter.Entry(info_frame, font=my_font, width=10, bg="white")
-connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5)
+connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=connect)
 disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5)
 
 name_entry.grid(row=0, column=1, padx=5, pady=5)
@@ -44,7 +98,17 @@ disconnect_button.grid(row=1, column=3, padx=5, pady=5)
 
 #output frame
 my_scrollbar = tkinter.Scrollbar(output_frame, orient=VERTICAL)
-my_listbox = tkinter.Listbox(output_frame, width=50, height=20, font=my_font, yscrollcommand=my_scrollbar.set)
+my_listbox = tkinter.Listbox(output_frame, width=47, height=15, borderwidth=3, font=my_font, yscrollcommand=my_scrollbar.set)
+my_scrollbar.config(command=my_listbox.yview)
+
+my_listbox.grid(row=0, column=0)
+my_scrollbar.grid(row=0, column=1, sticky="NS")
+
+#input frame
+input_entry = tkinter.Entry(input_frame, width=40, borderwidth=3, font=my_font)
+send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED)
+input_entry.grid(row=0, column=0, padx=5, pady=5)
+send_button.grid(row=0, column=1, padx=5, pady=5)
 
 
 #run root window's main loop

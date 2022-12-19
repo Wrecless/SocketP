@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c2badec-3153-4474-8158-7014c08b37be" name="Changes" comment="Created a multi chat window" />
+    <list default="true" id="6c2badec-3153-4474-8158-7014c08b37be" name="Changes" comment="Created a multi chat window">
+      <changelist_data name="Wrecless" email="73550513+wrecless@users.noreply.github.com" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Basic GUI chat room/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Basic GUI chat room/Client.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -243,7 +247,7 @@
       <workItem from="1671198742281" duration="71000" />
       <workItem from="1671199240469" duration="12000" />
       <workItem from="1671440006733" duration="361000" />
-      <workItem from="1671440385610" duration="8423000" />
+      <workItem from="1671440385610" duration="10584000" />
     </task>
     <task id="LOCAL-00001" summary="python socket learning">
       <created>1671103975767</created>
@@ -287,7 +291,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671450001124</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Created a multi chat window">
+      <created>1671450089874</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1671450089874</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Created a multi chat window">
+      <created>1671450117716</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671450117716</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,7 +348,7 @@
     <SUITE FILE_PATH="coverage/SocketP$Server.coverage" NAME="Server Coverage Results" MODIFIED="1671440397438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/multi Chat Room" />
     <SUITE FILE_PATH="coverage/SocketP$Tkinter.coverage" NAME="Tkinter Coverage Results" MODIFIED="1671447748860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
     <SUITE FILE_PATH="coverage/SocketP$main.coverage" NAME="main Coverage Results" MODIFIED="1671102181553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SocketP$Client__1_.coverage" NAME="Client (1) Coverage Results" MODIFIED="1671449715130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
+    <SUITE FILE_PATH="coverage/SocketP$Client__1_.coverage" NAME="Client (1) Coverage Results" MODIFIED="1671452171300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
     <SUITE FILE_PATH="coverage/SocketP$UDP_Client.coverage" NAME="UDP_Client Coverage Results" MODIFIED="1671103908839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SocketP$Client.coverage" NAME="Client Coverage Results" MODIFIED="1671440438370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/multi Chat Room" />
   </component>
