@@ -32,7 +32,7 @@ def receive_messages(client_socket):
 
             #receives message from client
             message = client_socket.recv(BYTESIZE).decode(ENCODER)
-            message = f"{name}: {message}".encode(ENCODER)
+            message = f"\033[1;92m\t{name}: {message}\033[0m".encode(ENCODER)
             broadcast(message)
         except:
             #finds index of client
@@ -46,7 +46,7 @@ def receive_messages(client_socket):
             #removes client from chat
             client_socket.close()
             #broadcast to everyone
-            broadcast(f"{name} has left the chat".encode(ENCODER))
+            broadcast(f"\033[5;91m\t{name} has left the chat\033[0m".encode(ENCODER)) #red / blinking
             break
 
 def connect_clients():
