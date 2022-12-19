@@ -145,6 +145,5 @@ send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_gr
 input_entry.grid(row=0, column=0, padx=5, pady=5)
 send_button.grid(row=0, column=1, padx=5, pady=5)
 
-
 #run root window's main loop
 root.mainloop()
