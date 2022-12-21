@@ -89,17 +89,43 @@ def verify_connection(name):
 
 def disconnect():
     '''Disconnect from server'''
-    pass
+    global client_socket
+
+    #close socket
+    client_socket.close()
+
+    connect_button.config(state=NORMAL)
+    disconnect_button.config(state=DISABLED)
+    send_button.config(state=DISABLED)
+
+    name_entry.config(state=NORMAL)
+    ip_entry.config(state=NORMAL)
+    port_entry.config(state=NORMAL)
 
 
 
 def send_message():
     '''Send message to server'''
-    pass
+
+    #get message
+    message = input_entry.get()
+    client_socket.send(message.encode(ENCODER))
+    #clear input
+    input_entry.delete(0, END)
+
 
 def receive_message():
     '''Receive message from server'''
-    pass
+    global client_socket
+
+    while True:
+        try:
+            message = client_socket.recv(BYTESIZE).decode(ENCODER)
+            my_listbox.insert(0, message)
+        except:
+            my_listbox.insert(0, "Connection lost")
+            client_socket.close()
+            break
 
 def security_check():
     '''Check for security issues'''
@@ -120,7 +146,7 @@ ip_entry = tkinter.Entry(info_frame, font=my_font, width=20, bg="white")
 port_label = tkinter.Label(info_frame, text="Port num: ", font=my_font, bg=black, fg=light_green)
 port_entry = tkinter.Entry(info_frame, font=my_font, width=10, bg="white")
 connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=connect)
-disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5)
+disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=disconnect)
 
 name_entry.grid(row=0, column=1, padx=5, pady=5)
 name_label.grid(row=0, column=0, padx=5, pady=5)
@@ -141,7 +167,7 @@ my_scrollbar.grid(row=0, column=1, sticky="NS")
 
 #input frame
 input_entry = tkinter.Entry(input_frame, width=40, borderwidth=3, font=my_font)
-send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED)
+send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED, command=send_message)
 input_entry.grid(row=0, column=0, padx=5, pady=5)
 send_button.grid(row=0, column=1, padx=5, pady=5)
 
