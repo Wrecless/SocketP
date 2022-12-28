@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c2badec-3153-4474-8158-7014c08b37be" name="Changes" comment="created new GUI interface to have an admin window">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adv Chat Room/Cliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adv Chat Room/Cliente.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adv Chat Room/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adv Chat Room/Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Chat Room Final V1/server (1).py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +261,7 @@
       <workItem from="1671643477509" duration="107000" />
       <workItem from="1671656092029" duration="1185000" />
       <workItem from="1671702478721" duration="6359000" />
-      <workItem from="1672235015312" duration="1901000" />
+      <workItem from="1672235015312" duration="2606000" />
     </task>
     <task id="LOCAL-00001" summary="python socket learning">
       <created>1671103975767</created>
