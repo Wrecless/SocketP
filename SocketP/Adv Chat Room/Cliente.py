@@ -1,5 +1,5 @@
-import tkinter, socket, threading
-from tkinter import DISABLED, VERTICAL, NORMAL, END, Y, LEFT, RIGHT, BOTH, TOP, BOTTOM, X, YES, NO, W, E, S, N, messagebox, StringVar
+import tkinter, socket, json, threading
+from tkinter import DISABLED, VERTICAL, END, StringVar, NORMAL
 
 #define window
 root = tkinter.Tk()
@@ -31,15 +31,33 @@ BYTESIZE = 1024
 class Connection:
     '''Create connection class for the server socket'''
     def __init__(self, client, address):
-        self.client = client
-        self.address = address
-        self.username = None
-        self.color = None
+        self.encoder = ENCODER
+        self.bytesize = BYTESIZE
 
 #define functions
-def connect():
+def connect(connection):
     '''Connect to server'''
-    pass
+    #clear previous chats
+    my_listbox.delete(0, END)
+
+    #get required info
+    connection.name = name_entry.get()
+    connection.target_ip = ip_entry.get()
+    connection.port = port_entry.get()
+    connection.color = color.get()
+
+    try:
+        #create client socket
+        connection.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #connect to server
+        connection.client_socket.connect((connection.target_ip, int(connection.port)))
+
+
+        #receive incoming message from server
+        message_json = connection.client_socket.recv(connection.bytesize)
+        process_message(connection, message_json)
+    except:
+        my_listbox.insert(0, "Unable to connect to server")
 
 def disconnect():
     '''Disconnect from server'''
@@ -47,7 +65,15 @@ def disconnect():
 
 def gui_start():
     '''Start GUI'''
-    pass
+    connect_button.config(state=DISABLED)
+    disconnect_button.config(state=NORMAL)
+    send_button.config(state=NORMAL)
+    name_entry.config(state=DISABLED)
+    ip_entry.config(state=DISABLED)
+    port_entry.config(state=DISABLED)
+
+    for button in color_buttons:
+        button.config(state=DISABLED)
 
 def gui_end():
     '''End GUI'''
@@ -55,11 +81,47 @@ def gui_end():
 
 def create_message(flag, name, message, color):
     '''return message to client'''
-    pass
+    message_packet = {
+        "flag": flag,
+        "name": name,
+        "message": message,
+        "color": color
+    }
+
+    return message_packet
 
 def process_message(connection, message_json):
     '''Process message from client'''
-    pass
+    #convert json to dict
+    message_packet = json.loads(message_json) #converts json to dictionary
+    flag = message_packet["flag"]
+    name = message_packet["name"]
+    message = message_packet["message"]
+    color = message_packet["color"]
+
+    if flag == "INFO":
+        message_packet = create_message("INFO",connection.name, "joined the chat", connection.color)
+        message_json = json.dumps(message_packet)
+        connection.client_socket.send(message_json.encode(connection.encoder))
+
+        #update GUI functions
+        gui_start()
+
+        #create a threat that constantly receives messages
+        receive_thread = threading.Thread(target=receive_message, args=(connection,)) #needs comma
+        receive_thread.start()
+
+    elif flag == "MESSAGE":
+        my_listbox.insert(0, f"{name}: {message}")
+        my_listbox.itemconfig(0, fg=color)
+
+    elif flag == "DISCONNECT":
+        pass
+
+    else:
+        #catch errors
+        my_listbox.insert(0, "Error: Invalid flag")
+
 
 def send_message(connection, message_json):
     '''Send message to client'''
@@ -67,9 +129,13 @@ def send_message(connection, message_json):
 
 def receive_message(connection):
     '''Receive message from client'''
-    pass
-
-
+    while True:
+        try:
+            message_json = connection.client_socket.recv(connection.bytesize)
+            process_message(connection, message_json)
+        except:
+            my_listbox.insert(0, "Error: Unable to receive message")
+            break
 
 #define GUI
 info_frame = tkinter.Frame(root, bg=black)
@@ -90,7 +156,7 @@ ip_label = tkinter.Label(info_frame, text="Host IP: ", font=my_font, bg=black, f
 ip_entry = tkinter.Entry(info_frame, font=my_font, width=20, bg="white")
 port_label = tkinter.Label(info_frame, text="Port num: ", font=my_font, bg=black, fg=light_green)
 port_entry = tkinter.Entry(info_frame, font=my_font, width=10, bg="white")
-connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=connect)
+connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=lambda:connect(my_connection), )
 disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=disconnect)
 
 name_entry.grid(row=0, column=1, padx=5, pady=5)
@@ -105,13 +171,13 @@ disconnect_button.grid(row=1, column=3, padx=5, pady=1)
 #Color Frame layout
 color = StringVar()
 color.set(white)
-white_button = tkinter.Radiobutton(color_frame, text="White", font=my_font, bg=black, fg=light_green, variable=color, value=white, command=security_check)
-red_button = tkinter.Radiobutton(color_frame, text="Red", font=my_font, bg=black, fg=light_green, variable=color, value=red, command=security_check)
-orange_button = tkinter.Radiobutton(color_frame, text="Orange", font=my_font, bg=black, fg=light_green, variable=color, value=orange, command=security_check)
-yellow_button = tkinter.Radiobutton(color_frame, text="yellow", font=my_font, bg=black, fg=light_green, variable=color, value=yellow, command=security_check)
-green_button = tkinter.Radiobutton(color_frame, text="Green", font=my_font, bg=black, fg=light_green, variable=color, value=green, command=security_check)
-blue_button = tkinter.Radiobutton(color_frame, text="Blue", font=my_font, bg=black, fg=light_green, variable=color, value=blue, command=security_check)
-purple_button = tkinter.Radiobutton(color_frame, text="Purple", font=my_font, bg=black, fg=light_green, variable=color, value=purple, command=security_check)
+white_button = tkinter.Radiobutton(color_frame, text="White", font=my_font, bg=black, fg=light_green, variable=color, value=white)
+red_button = tkinter.Radiobutton(color_frame, text="Red", font=my_font, bg=black, fg=light_green, variable=color, value=red)
+orange_button = tkinter.Radiobutton(color_frame, text="Orange", font=my_font, bg=black, fg=light_green, variable=color, value=orange)
+yellow_button = tkinter.Radiobutton(color_frame, text="yellow", font=my_font, bg=black, fg=light_green, variable=color, value=yellow)
+green_button = tkinter.Radiobutton(color_frame, text="Green", font=my_font, bg=black, fg=light_green, variable=color, value=green)
+blue_button = tkinter.Radiobutton(color_frame, text="Blue", font=my_font, bg=black, fg=light_green, variable=color, value=blue)
+purple_button = tkinter.Radiobutton(color_frame, text="Purple", font=my_font, bg=black, fg=light_green, variable=color, value=purple)
 
 color_buttons = [white_button, red_button, orange_button, yellow_button, green_button, blue_button, purple_button]
 
@@ -138,4 +204,5 @@ input_entry.grid(row=0, column=0, padx=5)
 send_button.grid(row=0, column=1, padx=5)
 
 #run root window's main loop
+my_connection = Connection()
 root.mainloop()
