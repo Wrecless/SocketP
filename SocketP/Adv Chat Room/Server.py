@@ -1,5 +1,5 @@
 import tkinter, socket, threading, json
-from tkinter import DISABLED, NORMAL, END, S, N, StringVar
+from tkinter import DISABLED, NORMAL, END
 
 
 # define window
@@ -17,8 +17,8 @@ root.config(bg=black)
 
 # define functions
 #creates a connection class to hold the server socket
-class Connection():
-    def __init__(self, client, address):
+class Connection:
+    def __init__(self):
         self.host_ip = socket.gethostbyname(socket.gethostname())
         self.encoder = "utf-8"
         self.bytesize = 1024
@@ -40,7 +40,7 @@ def start_server(connection):
 
     #update GUI
     history_listbox.delete(0, END)
-    history_listbox.insert(0, f"Server started on {connection.host_ip}:{connection.port}")
+    history_listbox.insert(0, f"Server started on port {connection.port}")
     #config buttons
     end_button.config(state=NORMAL)
     self_broadcast_button.config(state=NORMAL)
@@ -50,7 +50,7 @@ def start_server(connection):
     start_button.config(state=DISABLED)
 
     #start a thread to accept connections
-    connect_threat = threading.Thread(target=connect_client(), args=(connection,)) #NEEDS COMMA!
+    connect_threat = threading.Thread(target=connect_client, args=(connection,)) #NEEDS COMMA!
     connect_threat.start()
 
 def end_server(connection):
@@ -122,8 +122,14 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
         #now that a client has been established, send a message to the client
         receive_thread = threading.Thread(target=receive_message, args=(connection, client_socket,)) #NEEDS COMMA!
         receive_thread.start()
+
     elif flag == "MESSAGE":
-        pass
+        #broadcast message to all clients
+        broadcast_message(connection, message_json)
+        #update server UI
+        history_listbox.insert(END, f"{name}: {message}")
+        history_listbox.itemconfig(0, fg=color)
+
     elif flag == "DISCONNECT":
         pass
     else:
@@ -139,17 +145,32 @@ def broadcast_message(connection, message_json):
 
     pass
 
-def receive_message(connection, cliente_socket):
+def receive_message(connection, client_socket):
     '''Receive message from client'''
-    pass
+    while True:
+        try:
+            #receive message
+            message_json = client_socket.recv(connection.bytesize)
+            process_message(connection, message_json, client_socket)
+        except:
+            break
 
 def self_broadcast_message(connection):
     '''Broadcast message to all clients'''
-    pass
+    message_packet = create_message("MESSAGE", "Admin (broadcast)", input_entry.get(), "green")
+    message_json = json.dumps(message_packet)
+    broadcast_message(connection, message_json.encode(connection.encoder))
+
+    #clear message box
+    input_entry.delete(0, END)
 
 def private_message(connection):
     '''Send message to specific client'''
-    pass
+    #select from listbox
+    index = client_listbox.curselection()[0]
+    client_socket = connection.client_sockets[index]
+    #send message
+    message_packet = create_message("MESSAGE", "Admin (private)", input_entry.get(), "green")
 
 def kick_client(connection):
     '''Kick client from server'''
@@ -175,13 +196,13 @@ admin_frame.pack()
 #connection frame
 port_label = tkinter.Label(connection_frame, text="Port Number:", font=my_font, bg=black, fg=green)
 port_entry = tkinter.Entry(connection_frame, font=my_font, width=10, bg=black, fg=green, borderwidth=5)
-start_button = tkinter.Button(connection_frame, text="Start Server", font=my_font, bg=black, fg=green, width=10, borderwidth=5, )
-end_button = tkinter.Button(connection_frame, text="End", font=my_font, bg=black, fg=green, width=9, borderwidth=5, state=DISABLED)
+start_button = tkinter.Button(connection_frame, text="Start Server", font=my_font, bg=black, fg=green, width=10, borderwidth=5, command=lambda:start_server(my_connection))
+end_button = tkinter.Button(connection_frame, text="End", font=my_font, bg=black, fg=green, width=9, borderwidth=5, state=DISABLED, command=lambda:end_server(my_connection))
 
 #grid connection frame
 port_label.grid(row=0, column=0, padx=2, pady=5)
 port_entry.grid(row=0, column=1, padx=2, pady=5)
-start_button.grid(row=0, column=2, padx=5, pady=5)
+start_button.grid(row=0, column=2, padx=5, pady=5,)
 end_button.grid(row=0, column=3, padx=5, pady=5)
 
 #history frame
@@ -190,7 +211,7 @@ history_listbox = tkinter.Listbox(history_frame, width=47, height=9, font=my_fon
 history_scrollbar.config(command=history_listbox.yview)
 
 history_listbox.grid(row=0, column=0)
-history_scrollbar.grid(row=0, column=1, sticky=N+S)
+history_scrollbar.grid(row=0, column=1, sticky="ns")
 
 #client frame
 client_scrollbar = tkinter.Scrollbar(history_frame)
@@ -198,7 +219,7 @@ client_listbox = tkinter.Listbox(history_frame, width=47, height=9, font=my_font
 client_scrollbar.config(command=history_listbox.yview)
 
 client_listbox.grid(row=1, column=0, pady=5)
-client_scrollbar.grid(row=1, column=1, sticky=N+S, pady=5)
+client_scrollbar.grid(row=1, column=1, sticky="ns", pady=5)
 
 #message frame
 input_entry = tkinter.Entry(message_frame, font=my_font, width=30, bg=black, fg=green, borderwidth=5)
@@ -209,7 +230,7 @@ input_entry.grid(row=0, column=0, padx=5, pady=5)
 self_broadcast_button.grid(row=0, column=1, padx=5, pady=5)
 
 #admin frame
-message_button = tkinter.Button(admin_frame, text="Message", font=my_font, bg=black, fg=green, width=10, borderwidth=5, state=DISABLED)
+message_button = tkinter.Button(admin_frame, text="Message", font=my_font, bg=black, fg=green, width=10, borderwidth=5, state=DISABLED ,command=lambda:private_message(my_connection))
 kick_button = tkinter.Button(admin_frame, text="Kick", font=my_font, bg=black, fg=green, width=10, borderwidth=5, state=DISABLED)
 ban_button = tkinter.Button(admin_frame, text="Ban", font=my_font, bg=black, fg=green, width=10, borderwidth=5, state=DISABLED)
 
@@ -219,5 +240,5 @@ kick_button.grid(row=0, column=1, padx=5, pady=5)
 ban_button.grid(row=0, column=2, padx=5, pady=5)
 
 # run program
-my_connection = Connection(socket.gethostbyname(socket.gethostname()), 0)
+my_connection = Connection()
 root.mainloop()

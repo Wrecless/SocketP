@@ -11,35 +11,28 @@ root.resizable(False, False)
 #define fonts and colors
 my_font = ("Helvetica", 16)
 black = "black"
-light_green = "green"
-light_red = "#ff4d4d"
-blue = "blue"
-orange = "orange"
-pink = "#FF69B4"
+light_green = "light green"
 white = "white"
 red = "red"
 purple = "#800080"
 green = "#00FF00"
 yellow = "#FFFF00"
+orange = "#FFA500"
+blue = "#0000FF"
 
 root.config(bg=black)
 
-#define socket consts
-ENCODER = "utf-8"
-BYTESIZE = 1024
-
 class Connection:
     '''Create connection class for the server socket'''
-    def __init__(self, client, address):
-        self.encoder = ENCODER
-        self.bytesize = BYTESIZE
+    def __init__(self):
+        self.encoder = "utf-8"
+        self.bytesize = 1024
 
 #define functions
 def connect(connection):
     '''Connect to server'''
     #clear previous chats
     my_listbox.delete(0, END)
-
     #get required info
     connection.name = name_entry.get()
     connection.target_ip = ip_entry.get()
@@ -51,17 +44,21 @@ def connect(connection):
         connection.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #connect to server
         connection.client_socket.connect((connection.target_ip, int(connection.port)))
-
-
         #receive incoming message from server
         message_json = connection.client_socket.recv(connection.bytesize)
         process_message(connection, message_json)
     except:
         my_listbox.insert(0, "Unable to connect to server")
 
-def disconnect():
+def disconnect(connection):
     '''Disconnect from server'''
-    pass
+    #Create a message packet to be sent
+    message_packet = create_message("DISCONNECT", connection.name, "I am leaving.", connection.color)
+    message_json = json.dumps(message_packet)
+    connection.client_socket.send(message_json.encode(connection.encoder))
+
+    #Disable GUI for chat
+    gui_end()
 
 def gui_start():
     '''Start GUI'''
@@ -123,9 +120,14 @@ def process_message(connection, message_json):
         my_listbox.insert(0, "Error: Invalid flag")
 
 
-def send_message(connection, message_json):
+def send_message(connection):
     '''Send message to client'''
-    pass
+    message_packet = create_message("MESSAGE", connection.name, input_entry.get(), connection.color)
+    message_json = json.dumps(message_packet)
+    connection.client_socket.send(message_json.encode(connection.encoder))
+    #clear input entry
+    input_entry.delete(0, END)
+
 
 def receive_message(connection):
     '''Receive message from client'''
@@ -156,7 +158,7 @@ ip_label = tkinter.Label(info_frame, text="Host IP: ", font=my_font, bg=black, f
 ip_entry = tkinter.Entry(info_frame, font=my_font, width=20, bg="white")
 port_label = tkinter.Label(info_frame, text="Port num: ", font=my_font, bg=black, fg=light_green)
 port_entry = tkinter.Entry(info_frame, font=my_font, width=10, bg="white")
-connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=lambda:connect(my_connection), )
+connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=lambda:connect(my_connection))
 disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=disconnect)
 
 name_entry.grid(row=0, column=1, padx=5, pady=5)
@@ -199,7 +201,7 @@ my_scrollbar.grid(row=0, column=1, sticky="NS")
 
 #input frame
 input_entry = tkinter.Entry(input_frame, width=40, borderwidth=3, font=my_font)
-send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED, command=send_message)
+send_button = tkinter.Button(input_frame, text="Send", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED, command=lambda:send_message(my_connection))
 input_entry.grid(row=0, column=0, padx=5)
 send_button.grid(row=0, column=1, padx=5)
 

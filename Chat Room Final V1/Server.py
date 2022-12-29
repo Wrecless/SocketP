@@ -49,7 +49,7 @@ def start_server(connection):
     ban_button.config(state=NORMAL)
     start_button.config(state=DISABLED)
 
-    #Create a thread to continously listen for connections
+    #Create a thread to continuously listen for connections
     connect_thread = threading.Thread(target=connect_client, args=(connection,))
     connect_thread.start()
 
