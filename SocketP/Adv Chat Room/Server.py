@@ -55,7 +55,7 @@ def start_server(connection):
 
 def end_server(connection):
     '''End the server'''
-    message_packet = create_message("DISCONNECT", "Admin (broadcast)", "Server is shutting down", "red")
+    message_packet = create_message("DISCONNECT", "Admin (broadcast)", "Server is shutting down", red)
     message_json = json.dumps(message_packet)
     broadcast_message(connection, message_json.encode(connection.encoder))
     #update GUI
@@ -68,8 +68,7 @@ def end_server(connection):
     start_button.config(state=NORMAL)
 
     #close all connections
-    for client_socket in connection.client_sockets:
-        client_socket.close()
+    connection.server_socket.close()
 
 def connect_client(connection):
     '''Connect to server'''
@@ -121,12 +120,12 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
         connection.client_sockets.append(client_socket)
         connection.client_ips.append(client_address[0])
         #broadcast message that a user has joined
-        message_packet = create_message("MESSAGE", "Admin (broadcast)", f"{name} has joined the chat", "green")
+        message_packet = create_message("MESSAGE", "Admin (broadcast)", f"{name} has joined the chat", green)
         message_json = json.dumps(message_packet)
         broadcast_message(connection, message_json.encode(connection.encoder))
 
         #UPDATE SERVER UI
-        history_listbox.insert(END, f"{name} IP:{client_address[0]} has joined the chat")
+        client_listbox.insert(END, f"{name} IP:{client_address[0]} has joined the chat") #display name and ip on the admin side
 
         #now that a client has been established, send a message to the client
         receive_thread = threading.Thread(target=receive_message, args=(connection, client_socket,)) #NEEDS COMMA!
@@ -147,7 +146,7 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
         client_listbox.delete(index)
         client_socket.close()
         #broadcast message to all clients
-        message_packet = create_message("MESSAGE", "Admin (broadcast)", f"{name} has left the chat", "red")
+        message_packet = create_message("MESSAGE", "Admin (broadcast)", f"{name} has left the chat", red)
         message_json = json.dumps(message_packet)
         broadcast_message(connection, message_json.encode(connection.encoder))
         #update server UI
@@ -176,7 +175,7 @@ def receive_message(connection, client_socket):
 
 def self_broadcast_message(connection):
     '''Broadcast message to all clients'''
-    message_packet = create_message("MESSAGE", "Admin (broadcast)", input_entry.get(), "green")
+    message_packet = create_message("MESSAGE", "Admin (broadcast)", input_entry.get(), green)
     message_json = json.dumps(message_packet)
     broadcast_message(connection, message_json.encode(connection.encoder))
 
@@ -189,7 +188,7 @@ def private_message(connection):
     index = client_listbox.curselection()[0]
     client_socket = connection.client_sockets[index]
     #send message
-    message_packet = create_message("MESSAGE", "Admin (private)", input_entry.get(), "green")
+    message_packet = create_message("MESSAGE", "Admin (private)", input_entry.get(), green)
     message_json = json.dumps(message_packet)
     client_socket.send(message_json.encode(connection.encoder))
 
@@ -200,7 +199,7 @@ def kick_client(connection):
     index = client_listbox.curselection()[0]
     client_socket = connection.client_sockets[index]
     #send message
-    message_packet = create_message("DISCONNECT", "Admin (private)", "You have been kicked from the server", "red")
+    message_packet = create_message("DISCONNECT", "Admin (private)", "You have been kicked from the server", red)
     message_json = json.dumps(message_packet)
     client_socket.send(message_json.encode(connection.encoder))
     #close socket
@@ -211,7 +210,7 @@ def ban_client(connection):
     index = client_listbox.curselection()[0]
     client_socket = connection.client_sockets[index]
     #send message
-    message_packet = create_message("DISCONNECT", "Admin (private)", "You have been banned from the server", "red")
+    message_packet = create_message("DISCONNECT", "Admin (private)", "You have been banned from the server", red)
     message_json = json.dumps(message_packet)
     client_socket.send(message_json.encode(connection.encoder))
     #ban ip
