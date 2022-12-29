@@ -74,7 +74,15 @@ def gui_start():
 
 def gui_end():
     '''End GUI'''
-    pass
+    connect_button.config(state=NORMAL)
+    disconnect_button.config(state=DISABLED)
+    send_button.config(state=DISABLED)
+    name_entry.config(state=NORMAL)
+    ip_entry.config(state=NORMAL)
+    port_entry.config(state=NORMAL)
+
+    for button in color_buttons:
+        button.config(state=NORMAL)
 
 def create_message(flag, name, message, color):
     '''return message to client'''
@@ -82,7 +90,7 @@ def create_message(flag, name, message, color):
         "flag": flag,
         "name": name,
         "message": message,
-        "color": color
+        "color": color,
     }
 
     return message_packet
@@ -113,7 +121,10 @@ def process_message(connection, message_json):
         my_listbox.itemconfig(0, fg=color)
 
     elif flag == "DISCONNECT":
-        pass
+        #server telling the client to disconnect
+        my_listbox.insert(0, f"{name} has left the chat")
+        my_listbox.itemconfig(0, fg=color)
+
 
     else:
         #catch errors
@@ -159,7 +170,7 @@ ip_entry = tkinter.Entry(info_frame, font=my_font, width=20, bg="white")
 port_label = tkinter.Label(info_frame, text="Port num: ", font=my_font, bg=black, fg=light_green)
 port_entry = tkinter.Entry(info_frame, font=my_font, width=10, bg="white")
 connect_button = tkinter.Button(info_frame, text="Connect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=lambda:connect(my_connection))
-disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5, command=disconnect)
+disconnect_button = tkinter.Button(info_frame, text="Disconnect", font=my_font, bg=light_green, fg=black, borderwidth=5, state=DISABLED, command=lambda:disconnect(my_connection))
 
 name_entry.grid(row=0, column=1, padx=5, pady=5)
 name_label.grid(row=0, column=0, padx=5, pady=5)
