@@ -18,12 +18,33 @@ def load_keys():
 
     return (pubKey, privKey)
 
+def encrypt_message(message, key):
+    return rsa.encrypt(message.encode('ascii'), key)
+
+def decrypt_message(ciphertext, key):
+    try:
+        return rsa.decrypt(ciphertext, key).decode('ascii')
+    except:
+        return False
+
+
+def sign_message(message, key):
+    return rsa.sign(message.encode('ascii'), key, 'SHA-1')
+
+def verify_signature(message, signature, key):
+    try:
+        return rsa.verify(message.encode('ascii'), signature, key) == 'SHA-1'
+    except:
+        return False
+
+generate_keys()
+pubKey, privKey = load_keys()
 
 #define consts
 HOST = socket.gethostbyname(socket.gethostname())
 PORT = 5050
 BYTESIZE = 1024
-ENCODER = "utf-8"
+
 
 #create socket
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -50,7 +71,7 @@ def receive_messages(client_socket):
 
             #receives message from client
             message = client_socket.recv(BYTESIZE).decode(ENCODER)
-            message = f"\033[1;92m\t{name}: {message}\033[0m".encode(ENCODER)
+            message = f"{name}: {message}".encode(ENCODER)
             broadcast(message)
         except:
             #finds index of client
@@ -64,7 +85,7 @@ def receive_messages(client_socket):
             #removes client from chat
             client_socket.close()
             #broadcast to everyone
-            broadcast(f"\033[5;91m\t{name} has left the chat\033[0m".encode(ENCODER)) #red / blinking
+            broadcast(f"{name} has left the chat".encode(ENCODER)) #red / blinking
             break
 
 def connect_clients():
@@ -88,8 +109,8 @@ def connect_clients():
         broadcast(f"{client_Name} has joined the chat\n".encode(ENCODER)) #server
 
         #creates thread to handle client
-        recieve_thread = threading.Thread(target=receive_messages, args=(client_socket,)) #NEEDS THE COMMA!!!
-        recieve_thread.start()
+        receive_thread = threading.Thread(target=receive_messages, args=(client_socket,)) #NEEDS THE COMMA!!!
+        receive_thread.start()
 
 #starts server
 print("Server is starting...")

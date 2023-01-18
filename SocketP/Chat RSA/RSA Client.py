@@ -1,5 +1,24 @@
 import socket
 import threading
+import rsa
+
+def load_keys():
+    with open("keys/pubkey.pem", "rb") as f:
+        pubKey = rsa.PublicKey.load_pkcs1(f.read())
+
+    with open("keys/privkey.pem", "rb") as f:
+        privKey = rsa.PrivateKey.load_pkcs1(f.read())
+
+    return (pubKey, privKey)
+
+def encrypt_message(message, key):
+    return rsa.encrypt(message.encode('ascii'), key)
+
+def decrypt_message(ciphertext, key):
+    try:
+        return rsa.decrypt(ciphertext, key).decode('ascii')
+    except:
+        return False
 
 # define consts
 DEST_IP = socket.gethostbyname(socket.gethostname())
@@ -16,7 +35,7 @@ def send_message():
     '''sends messages to server'''
     while True:
         message = input("")
-        client_socket.send(message.encode(ENCODER))
+        client_socket.send(message.encode(encrypt_message(message, pubKey)))
 
 def receive_message():
     '''receives messages from server'''
