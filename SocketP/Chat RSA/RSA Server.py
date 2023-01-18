@@ -18,6 +18,7 @@ def load_keys():
 
     return (pubKey, privKey)
 
+
 #define consts
 HOST = socket.gethostbyname(socket.gethostname())
 PORT = 5050
