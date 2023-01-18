@@ -22,7 +22,7 @@ blue = "#0000FF"
 
 root.config(bg=black)
 
-class Connection:
+class Connection():
     '''Create connection class for the server socket'''
     def __init__(self):
         self.encoder = "utf-8"
@@ -122,8 +122,9 @@ def process_message(connection, message_json):
 
     elif flag == "DISCONNECT":
         #server telling the client to disconnect
-        my_listbox.insert(0, f"{name} has left the chat")
+        my_listbox.insert(0, f"{name}: {message}")
         my_listbox.itemconfig(0, fg=color)
+        disconnect(connection)
 
 
     else:

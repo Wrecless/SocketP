@@ -59,7 +59,7 @@ def end_server(connection):
     message_json = json.dumps(message_packet)
     broadcast_message(connection, message_json.encode(connection.encoder))
     #update GUI
-    history_listbox.insert(0, "Server stopped")
+    history_listbox.insert(0, f"Server stopped on port {connection.port}")
     end_button.config(state=DISABLED)
     self_broadcast_button.config(state=DISABLED)
     message_button.config(state=DISABLED)
@@ -231,7 +231,7 @@ admin_frame.pack()
 
 #connection frame
 port_label = tkinter.Label(connection_frame, text="Port Number:", font=my_font, bg=black, fg=green)
-port_entry = tkinter.Entry(connection_frame, font=my_font, width=10, bg=black, fg=green, borderwidth=5)
+port_entry = tkinter.Entry(connection_frame, font=my_font, width=10, fg=green, borderwidth=5)
 start_button = tkinter.Button(connection_frame, text="Start Server", font=my_font, bg=black, fg=green, width=10, borderwidth=5, command=lambda:start_server(my_connection))
 end_button = tkinter.Button(connection_frame, text="End", font=my_font, bg=black, fg=green, width=9, borderwidth=5, state=DISABLED, command=lambda:end_server(my_connection))
 
@@ -258,8 +258,8 @@ client_listbox.grid(row=1, column=0, pady=5)
 client_scrollbar.grid(row=1, column=1, sticky="NS", pady=5)
 
 #message frame
-input_entry = tkinter.Entry(message_frame, font=my_font, width=30, bg=black, fg=green, borderwidth=5)
-self_broadcast_button = tkinter.Button(message_frame, text="Self Broadcast", font=my_font, bg=black, fg=green, width=15, borderwidth=5, state=DISABLED, command=lambda:self_broadcast_message(my_connection))
+input_entry = tkinter.Entry(message_frame, font=my_font, width=30, fg=green, borderwidth=5)
+self_broadcast_button = tkinter.Button(message_frame, text="Admin Send", font=my_font, bg=black, fg=green, width=15, borderwidth=5, state=DISABLED, command=lambda:self_broadcast_message(my_connection))
 
 #grid message frame
 input_entry.grid(row=0, column=0, padx=5, pady=5)

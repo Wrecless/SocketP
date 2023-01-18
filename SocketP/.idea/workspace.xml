@@ -5,6 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c2badec-3153-4474-8158-7014c08b37be" name="Changes" comment="DEBUGGING">
+      <change beforePath="$PROJECT_DIR$/../Reverse Shell Multi threading/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Reverse Shell Multi threading/Client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reverse Shell/.idea/Reverse Shell.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Reverse Shell/.idea/Reverse Shell.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reverse Shell/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Reverse Shell/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reverse Shell/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Reverse Shell/Client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SocketP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SocketP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Adv Chat Room/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adv Chat Room/Server.py" afterDir="false" />
     </list>
@@ -27,9 +33,7 @@
         <option value="Bruno-PC" />
       </list>
     </option>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Adv Chat Room/Server_Test.py" root0="FORCE_HIGHLIGHTING" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,7 +54,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ninta/OneDrive - University of Derby/Uni/Year 2/Network & Security/SocketP",
+    "last_opened_file_path": "C:/Users/ninta/OneDrive - University of Derby/Uni/Year 2/Network & Security",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -64,12 +68,14 @@
       <recent name="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP\Adv Chat Room" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP" />
+      <recent name="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP\Security" />
       <recent name="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP\Basic GUI chat room" />
       <recent name="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP\start" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Cliente">
-    <configuration name="Client_Test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.Server">
+    <configuration name="Client (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SocketP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -77,12 +83,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adv Chat Room" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/multi Chat Room" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adv Chat Room/Client_Test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multi Chat Room/Client.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -91,7 +97,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Cliente" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Client (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SocketP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -99,12 +105,56 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adv Chat Room" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/start" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adv Chat Room/Cliente.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/start/Client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SocketP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Basic GUI chat room" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Basic GUI chat room/Client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Server (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SocketP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/multi Chat Room" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multi Chat Room/Server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,61 +171,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adv Chat Room" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/start" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <EXTENSION ID="software.aws.toolkits.jetbrains.core.execution.PythonAwsConnectionExtension">
-        <option name="credential" />
-        <option name="region" />
-        <option name="useCurrentConnection" value="false" />
-      </EXTENSION>
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adv Chat Room/Server.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server_Test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SocketP" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adv Chat Room" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adv Chat Room/Server_Test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server_Test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SocketP" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adv Chat Room" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\ninta\OneDrive - University of Derby\Uni\Year 2\Network &amp; Security\SocketP\Adv Chat Room\Server_Test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/start/Server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -207,20 +208,20 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.Server_Test (1)" />
-      <item itemvalue="Python.Client_Test" />
-      <item itemvalue="Python.Server_Test" />
-      <item itemvalue="Python.Cliente" />
+      <item itemvalue="Python.Client (1)" />
+      <item itemvalue="Python.Client (2)" />
+      <item itemvalue="Python.Client" />
+      <item itemvalue="Python.Server (2)" />
       <item itemvalue="Python.Server" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Cliente" />
         <item itemvalue="Python.Server" />
-        <item itemvalue="Python.Client_Test" />
-        <item itemvalue="Python.Server_Test (1)" />
-        <item itemvalue="Python.Server_Test" />
+        <item itemvalue="Python.Client (2)" />
+        <item itemvalue="Python.Client (1)" />
+        <item itemvalue="Python.Server (2)" />
+        <item itemvalue="Python.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -260,6 +261,12 @@
       <workItem from="1671702478721" duration="6359000" />
       <workItem from="1672235015312" duration="8985000" />
       <workItem from="1672303806832" duration="7088000" />
+      <workItem from="1672479607467" duration="18000" />
+      <workItem from="1672479634491" duration="3543000" />
+      <workItem from="1673279892571" duration="208000" />
+      <workItem from="1673280117228" duration="1919000" />
+      <workItem from="1673448239820" duration="1318000" />
+      <workItem from="1673449677506" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="python socket learning">
       <created>1671103975767</created>
@@ -397,28 +404,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SocketP$Server__1_.coverage" NAME="Server (1) Coverage Results" MODIFIED="1671536994013" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
-    <SUITE FILE_PATH="coverage/SocketP$Client_Test.coverage" NAME="Client_Test Coverage Results" MODIFIED="1672316930762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$test.coverage" NAME="test Coverage Results" MODIFIED="1671706659779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$Json_Server.coverage" NAME="Json_Server Coverage Results" MODIFIED="1671614338990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Json GUI" />
-    <SUITE FILE_PATH="coverage/SocketP$Server_Chat.coverage" NAME="Server Chat Coverage Results" MODIFIED="1671184265781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chat" />
-    <SUITE FILE_PATH="coverage/SocketP$Tkinter.coverage" NAME="Tkinter Coverage Results" MODIFIED="1671447748860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
-    <SUITE FILE_PATH="coverage/SocketP$Json_test.coverage" NAME="Json test Coverage Results" MODIFIED="1671657121506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Json" />
-    <SUITE FILE_PATH="coverage/SocketP$Server_Test__1_.coverage" NAME="Server_Test (1) Coverage Results" MODIFIED="1672316923541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$Json_Server__1_.coverage" NAME="Json_Server (1) Coverage Results" MODIFIED="1671656891511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Json" />
-    <SUITE FILE_PATH="coverage/SocketP$Client_Chat.coverage" NAME="Client-Chat Coverage Results" MODIFIED="1671185233286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Chat" />
-    <SUITE FILE_PATH="coverage/SocketP$Pickle_Server.coverage" NAME="Pickle_Server Coverage Results" MODIFIED="1671613212586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Gui" />
-    <SUITE FILE_PATH="coverage/SocketP$UDP_Server.coverage" NAME="UDP_Server Coverage Results" MODIFIED="1671103904379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SocketP$Threat.coverage" NAME="Threat Coverage Results" MODIFIED="1671185687593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/multi Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$Server.coverage" NAME="Server Coverage Results" MODIFIED="1672317568196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$main.coverage" NAME="main Coverage Results" MODIFIED="1671102181553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SocketP$Client__1_.coverage" NAME="Client (1) Coverage Results" MODIFIED="1671536997606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Basic GUI chat room" />
-    <SUITE FILE_PATH="coverage/SocketP$Cliente.coverage" NAME="Cliente Coverage Results" MODIFIED="1672317574606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$pickle_client.coverage" NAME="pickle_client Coverage Results" MODIFIED="1671613319040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Adv Gui" />
-    <SUITE FILE_PATH="coverage/SocketP$UDP_Client.coverage" NAME="UDP_Client Coverage Results" MODIFIED="1671103908839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SocketP$Client.coverage" NAME="Client Coverage Results" MODIFIED="1671440438370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/multi Chat Room" />
-    <SUITE FILE_PATH="coverage/SocketP$Json_Client.coverage" NAME="Json_Client Coverage Results" MODIFIED="1671614341813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Json GUI" />
   </component>
 </project>
