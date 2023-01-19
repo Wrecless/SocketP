@@ -1,5 +1,10 @@
 #chat server
 import socket, rsa
+from datetime import datetime
+timestamp = 1625309472.357246
+date_time = datetime.fromtimestamp(timestamp)
+str_time = date_time.strftime("%I:%M.%S")
+
 
 #define consts
 HOST_IP = socket.gethostbyname(socket.gethostname())
@@ -70,7 +75,7 @@ while True:
         print("Closing connection.")
         break
     else:
-        print(f"\n{client_address} sent: {message}")
+        print(f"\n{client_address} at {str_time} sent: {message}")
         message = input("Enter a message: ")
         message = encrypt_message(message, pubKey)
         client_socket.send(message)
