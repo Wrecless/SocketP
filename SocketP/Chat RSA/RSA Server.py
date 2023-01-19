@@ -2,6 +2,22 @@ import socket
 import threading
 import rsa
 
+#define consts
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = 5050
+BYTESIZE = 1024
+ENCODER = 'ascii'
+
+
+#create socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((HOST, PORT))
+server.listen()
+
+#stores all the clients
+clients_Socket_List = []
+clients_Name_List = []
+
 def generate_keys():
     (pubKey, privKey) = rsa.newkeys(1024)
     with open ("keys/pubkey.pem", "wb") as f:
@@ -37,23 +53,6 @@ def verify_signature(message, signature, key):
     except:
         return False
 
-generate_keys()
-pubKey, privKey = load_keys()
-
-#define consts
-HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5050
-BYTESIZE = 1024
-
-
-#create socket
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((HOST, PORT))
-server.listen()
-
-#stores all the clients
-clients_Socket_List = []
-clients_Name_List = []
 
 #broadcasts messages to all clients
 def broadcast(message):
@@ -61,7 +60,7 @@ def broadcast(message):
     for client in clients_Socket_List:
         client.send(message)
 
-def receive_messages(client_socket):
+def receive_messages(client_socket, decrypt_message):
     '''receives messages from clients'''
     while True:
         try:
@@ -71,7 +70,9 @@ def receive_messages(client_socket):
 
             #receives message from client
             message = client_socket.recv(BYTESIZE).decode(ENCODER)
+            print(message)
             message = f"{name}: {message}".encode(ENCODER)
+            print(message)
             broadcast(message)
         except:
             #finds index of client
@@ -115,3 +116,5 @@ def connect_clients():
 #starts server
 print("Server is starting...")
 connect_clients()
+generate_keys()
+pubKey, privKey = load_keys()

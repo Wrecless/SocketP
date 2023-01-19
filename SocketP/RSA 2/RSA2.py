@@ -41,7 +41,9 @@ generate_keys()
 pubKey, privKey = load_keys()
 
 message = input("Enter message: ")
+print (type(message))
 ciphertext = encrypt_message(message, pubKey)
+print (type(ciphertext))
 
 sign_message(message, privKey)
 

@@ -2,6 +2,17 @@ import socket
 import threading
 import rsa
 
+# define consts
+DEST_IP = socket.gethostbyname(socket.gethostname())
+DEST_PORT = 5050
+BYTESIZE = 1024
+ENCODER = 'ascii'
+
+# create socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect((DEST_IP, DEST_PORT))
+
+#RSA
 def load_keys():
     with open("keys/pubkey.pem", "rb") as f:
         pubKey = rsa.PublicKey.load_pkcs1(f.read())
@@ -20,22 +31,14 @@ def decrypt_message(ciphertext, key):
     except:
         return False
 
-# define consts
-DEST_IP = socket.gethostbyname(socket.gethostname())
-DEST_PORT = 5050
-BYTESIZE = 1024
-ENCODER = "utf-8"
-
-# create socket
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((DEST_IP, DEST_PORT))
+pubKey, privKey = load_keys()
 
 # receive messages from server
-def send_message():
+def send_message(encrypt_message):
     '''sends messages to server'''
     while True:
-        message = input("")
-        client_socket.send(message.encode(encrypt_message(message, pubKey)))
+        message = input()
+        client_socket.send(encrypt_message(message, pubKey))
 
 def receive_message():
     '''receives messages from server'''
@@ -56,6 +59,7 @@ def receive_message():
             client_socket.close()
             break
 
+
 # create threads to receive messages
 print("Client is starting...")
 receive_thread = threading.Thread(target=receive_message)
@@ -64,3 +68,4 @@ send_thread = threading.Thread(target=send_message)
 # start threads
 receive_thread.start()
 send_thread.start()
+

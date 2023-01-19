@@ -6,7 +6,7 @@ import socket
 DEST_IP = socket.gethostbyname(socket.gethostname())
 DEST_PORT = 5000
 BUFFER_SIZE = 1024
-ENCODER = "utf-8"
+ENCODER = "ascii"
 
 # create a client socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

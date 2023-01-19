@@ -5,7 +5,7 @@ import socket
 HOST_IP = socket.gethostbyname(socket.gethostname())
 HOST_PORT = 5000
 BUFFER_SIZE = 1024
-ENCODER = "utf-8"
+ENCODER = "ascii"
 
 #create a server socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
