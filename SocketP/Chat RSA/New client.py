@@ -1,12 +1,7 @@
-#client side
-import socket, rsa
+import socket
+import threading
+import rsa
 
-
-# define consts
-DEST_IP = socket.gethostbyname(socket.gethostname())
-DEST_PORT = 5000
-BUFFER_SIZE = 1024
-ENCODER = "ascii"
 
 def load_keys():
     with open("keys/pubkey.pem", "rb") as f:
@@ -39,27 +34,21 @@ def verify_signature(message, signature, key):
 pubKey, privKey = load_keys()
 
 
-# create a client socket
+# define consts
+DEST_IP = socket.gethostbyname(socket.gethostname())
+DEST_PORT = 5050
+BYTESIZE = 1024
+ENCODER = "utf-8"
+
+# create socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((DEST_IP, DEST_PORT))
 
-#send / receive data
-while True:
-    #receive data
-    message = client_socket.recv(BUFFER_SIZE)
-    message = decrypt_message(message, privKey)
+#message = client_socket.recv(BYTESIZE).decode(ENCODER)
+MESSAGE = "Hello World"
+MESSAGE_ENCRYPTED = encrypt_message(MESSAGE, pubKey)
+STATE = 2
 
-
-    #quit function
-    if message == "quit":
-        client_socket.send("quit".encode(ENCODER))
-        print("Closing connection.")
-        break
-    else:
-        print(f"\n{message}")
-        message = input("Enter a message: ")
-        message = encrypt_message(message, pubKey)
-        client_socket.send(message)
-
-#close connection
-client_socket.close()
+msg_packet = [MESSAGE, MESSAGE_ENCRYPTED, STATE]
+print (type(msg_packet))
+msg_send = client_socket.send(msg_packet.encode(ENCODER))

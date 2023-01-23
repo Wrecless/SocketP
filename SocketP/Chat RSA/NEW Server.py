@@ -1,4 +1,6 @@
-import socket, threading, time, rsa
+import socket
+import threading
+import rsa
 
 def load_keys():
     with open("keys/pubkey.pem", "rb") as f:
@@ -30,19 +32,27 @@ def verify_signature(message, signature, key):
 
 pubKey, privKey = load_keys()
 
-MESSAGE = "Hello World"
-MESSAGE_ENCRYPTED = encrypt_message(MESSAGE, pubKey)
-STATE = 2
 
-msg_packet = [MESSAGE, MESSAGE_ENCRYPTED, STATE]
 
-print(msg_packet)
+#define consts
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = 5050
+BYTESIZE = 1024
+ENCODER = "utf-8"
 
-msg_packet.encode('utf-8')
-print(msg_packet)
-msg_packet.decode('utf-8')
-print(msg_packet)
-msg_encrypted = msg_packet[1]
-print(msg_encrypted)
-msg_decrypted = decrypt_message(msg_encrypted, privKey)
-print(msg_decrypted)
+#create socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((HOST, PORT))
+server.listen()
+
+#stores all the clients
+clients_Socket_List = []
+clients_Name_List = []
+
+#accepts connection
+client_socket, client_address = server.accept()
+print(f"Connected with {client_address}...")
+
+#receives client info and broadcasts it
+clientInfo = client_socket.recv(BYTESIZE).decode(ENCODER)
+print (clientInfo)
