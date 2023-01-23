@@ -114,6 +114,7 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
     name = message_packet["name"]
     message = message_packet["message"]
     color = message_packet["color"]
+    #idtag
 
     if flag == "INFO":
         #check the flag
