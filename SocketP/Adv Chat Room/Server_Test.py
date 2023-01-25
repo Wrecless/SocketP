@@ -186,6 +186,7 @@ def recieve_message(connection, client_socket):
 def self_broadcast(connection):
     '''Broadcast a special admin message to all clients'''
     #Create a message packet
+    #print(input_message)
     message_packet = create_message("MESSAGE", "Admin (broadcast)", input_entry.get(), light_green)
     message_json = json.dumps(message_packet)
     broadcast_message(connection, message_json.encode(connection.encoder))

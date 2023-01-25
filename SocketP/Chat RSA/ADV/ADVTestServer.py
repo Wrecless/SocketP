@@ -26,6 +26,7 @@ class Connection():
         self.client_sockets = []
         self.client_ips = []
         self.banned_ips = []
+        self.client_ids = []
 
 def start_server(connection):
     '''Start the server'''
@@ -97,13 +98,38 @@ def connect_client(connection):
         except:
             break
 
-def create_message(flag, name, message, color):
+def encrypt_caesar(plaintext, shift):
+    """Encrypt the string and return the ciphertext"""
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            shift_char = chr((ord(char) + shift - 97) % 26 + 97)
+            ciphertext += shift_char
+        else:
+            ciphertext += char
+    return ciphertext
+
+def decrypt_caesar(ciphertext, shift):
+    """Decrypt the string and return the plaintext"""
+    plaintext = "".lower()
+    for char in ciphertext:
+        if char.isalpha():
+            shift_char = chr((ord(char) - shift - 97) % 26 + 97)
+            plaintext += shift_char
+        else:
+            plaintext += char
+    return plaintext
+
+shift = 3
+
+def create_message(flag, name, message, color, id=0):
     '''return message to client'''
     message_packet = {
         "flag": flag,
         "name": name,
         "message": message,
         "color": color,
+        "id": id
     }
     return message_packet
 
@@ -114,13 +140,18 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
     name = message_packet["name"]
     message = message_packet["message"]
     color = message_packet["color"]
+    id = message_packet["id"]
 
     if flag == "INFO":
         #check the flag
         connection.client_sockets.append(client_socket)
         connection.client_ips.append(client_address[0])
+        connection.client_ids.append(id)
         #broadcast message that a user has joined
-        message_packet = create_message("MESSAGE", "Admin (broadcast)", f"{name} has joined the chat", green)
+        name = name.lower()
+        joined = f"{name} has joined the chat"
+        joined = encrypt_caesar(joined, shift)
+        message_packet = create_message("MESSAGE", "Admin (broadcast)", joined, green, id)
         message_json = json.dumps(message_packet)
         broadcast_message(connection, message_json.encode(connection.encoder))
 
@@ -135,7 +166,9 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
         #broadcast message to all clients
         broadcast_message(connection, message_json)
         #update server UI
-        history_listbox.insert(0, f"{name}: {message}")
+        message = message.lower()
+        message = decrypt_caesar(message, shift)
+        history_listbox.insert(0, f"ID:{id}-{name}: {message}")
         history_listbox.itemconfig(0, fg=color)
 
     elif flag == "DISCONNECT":
@@ -157,6 +190,7 @@ def process_message(connection, message_json, client_socket, client_address=(0,0
         history_listbox.insert(0, "Error: Invalid flag")
         pass
 
+
 def broadcast_message(connection, message_json):
     '''Broadcast message to all clients'''
     #ALL MESSAGES ARE ENCODED IN JSON
@@ -175,7 +209,12 @@ def receive_message(connection, client_socket):
 
 def self_broadcast_message(connection):
     '''Broadcast message to all clients'''
-    message_packet = create_message("MESSAGE", "Admin (broadcast)", input_entry.get(), green)
+    input_message = input_entry.get()
+    #print(input_message)
+    input_message = input_message.lower()
+    #print(input_message)
+    input_message = encrypt_caesar(input_message, shift)
+    message_packet = create_message("MESSAGE", "Admin (broadcast)", input_message, green)
     message_json = json.dumps(message_packet)
     broadcast_message(connection, message_json.encode(connection.encoder))
 
@@ -188,7 +227,10 @@ def private_message(connection):
     index = client_listbox.curselection()[0]
     client_socket = connection.client_sockets[index]
     #send message
-    message_packet = create_message("MESSAGE", "Admin (private)", input_entry.get(), green)
+    input_message = input_entry.get()
+    input_message = input_message.lower()
+    input_message = encrypt_caesar(input_message, shift)
+    message_packet = create_message("MESSAGE", "Admin (private)", input_message, green)
     message_json = json.dumps(message_packet)
     client_socket.send(message_json.encode(connection.encoder))
 
@@ -198,12 +240,11 @@ def kick_client(connection):
     '''Kick client from server'''
     index = client_listbox.curselection()[0]
     client_socket = connection.client_sockets[index]
+
     #send message
     message_packet = create_message("DISCONNECT", "Admin (private)", "You have been kicked from the server", red)
     message_json = json.dumps(message_packet)
     client_socket.send(message_json.encode(connection.encoder))
-    #close socket
-
 
 def ban_client(connection):
     '''Ban client from server'''

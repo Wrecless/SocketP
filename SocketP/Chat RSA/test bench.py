@@ -30,19 +30,68 @@ def verify_signature(message, signature, key):
 
 pubKey, privKey = load_keys()
 
-MESSAGE = "Hello World"
-MESSAGE_ENCRYPTED = encrypt_message(MESSAGE, pubKey)
-STATE = 2
+def encrypt_caesar(plaintext, shift):
+    """Encrypt the string and return the ciphertext"""
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            shift_char = chr((ord(char) + shift - 97) % 26 + 97)
+            ciphertext += shift_char
+        else:
+            ciphertext += char
+    return ciphertext
 
-msg_packet = [MESSAGE, MESSAGE_ENCRYPTED, STATE]
+def decrypt_caesar(ciphertext, shift):
+    """Decrypt the string and return the plaintext"""
+    plaintext = ""
+    for char in ciphertext:
+        if char.isalpha():
+            shift_char = chr((ord(char) - shift - 97) % 26 + 97)
+            plaintext += shift_char
+        else:
+            plaintext += char
+    return plaintext
 
-print(msg_packet)
+# example usage
+plaintext = "name"
+shift = 3
+ciphertext = encrypt_caesar(plaintext, shift)
+print("Ciphertext: ", ciphertext)
+print(type(ciphertext))
+decrypted_text = decrypt_caesar(ciphertext, shift)
+print("Decrypted text: ", decrypted_text)
+print(type(decrypted_text))
 
-msg_packet.encode('utf-8')
-print(msg_packet)
-msg_packet.decode('utf-8')
-print(msg_packet)
-msg_encrypted = msg_packet[1]
-print(msg_encrypted)
-msg_decrypted = decrypt_message(msg_encrypted, privKey)
-print(msg_decrypted)
+"""
+import socket
+
+def send_message(message, host, port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        s.sendall(message.encode())
+
+def receive_message(host, port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((host, port))
+        s.listen()
+        conn, addr = s.accept()
+        with conn:
+            print('Connected by', addr)
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                print(data.decode())
+
+# encrypt the message
+plaintext = "hello world"
+shift = 3
+ciphertext = encrypt_caesar(plaintext, shift)
+
+# send the message
+send_message(ciphertext, "127.0.0.1", 1234)
+
+# receive the message
+receive_message("127.0.0.1", 1234)
+"""
+27052009

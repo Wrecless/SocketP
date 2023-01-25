@@ -1,5 +1,7 @@
-import tkinter, socket, json, threading
+import tkinter, socket, json, threading, random
 from tkinter import DISABLED, VERTICAL, END, StringVar, NORMAL
+
+id = random.randint(1000, 9999)
 
 #define window
 root = tkinter.Tk()
@@ -11,7 +13,7 @@ root.resizable(False, False)
 #define fonts and colors
 my_font = ("Helvetica", 16)
 black = "black"
-light_green = "light green"
+light_green = "#00E53D"
 white = "white"
 red = "red"
 purple = "#800080"
@@ -19,6 +21,7 @@ green = "#00FF00"
 yellow = "#FFFF00"
 orange = "#FFA500"
 blue = "#0000FF"
+dark_green = "#004913"
 
 root.config(bg=black)
 
@@ -38,6 +41,7 @@ def connect(connection):
     connection.target_ip = ip_entry.get()
     connection.port = port_entry.get()
     connection.color = color.get()
+    connection.id = id
 
     try:
         #create client socket
@@ -53,7 +57,7 @@ def connect(connection):
 def disconnect(connection):
     '''Disconnect from server'''
     #Create a message packet to be sent
-    message_packet = create_message("DISCONNECT", connection.name, "I am leaving.", connection.color)
+    message_packet = create_message("DISCONNECT", connection.name, "I am leaving.", connection.color, connection.id)
     message_json = json.dumps(message_packet)
     connection.client_socket.send(message_json.encode(connection.encoder))
 
@@ -84,13 +88,14 @@ def gui_end():
     for button in color_buttons:
         button.config(state=NORMAL)
 
-def create_message(flag, name, message, color):
+def create_message(flag, name, message, color, id):
     '''return message to client'''
     message_packet = {
         "flag": flag,
         "name": name,
         "message": message,
         "color": color,
+        "id": id
     }
 
     return message_packet
@@ -103,9 +108,10 @@ def process_message(connection, message_json):
     name = message_packet["name"]
     message = message_packet["message"]
     color = message_packet["color"]
+    id = message_packet["id"]
 
     if flag == "INFO":
-        message_packet = create_message("INFO",connection.name, "joined the chat", connection.color)
+        message_packet = create_message("INFO",connection.name, "joined the chat", connection.color, connection.id)
         message_json = json.dumps(message_packet)
         connection.client_socket.send(message_json.encode(connection.encoder))
 
@@ -117,12 +123,13 @@ def process_message(connection, message_json):
         receive_thread.start()
 
     elif flag == "MESSAGE":
-        my_listbox.insert(0, f"{name}: {message}")
+        message = decrypt_caesar(message, shift)
+        my_listbox.insert(0, f"ID:{id}-{name}: {message}")
         my_listbox.itemconfig(0, fg=color)
 
     elif flag == "DISCONNECT":
         #server telling the client to disconnect
-        my_listbox.insert(0, f"{name}: {message}")
+        my_listbox.insert(0, f"ID:{id}-{name}: {message}")
         my_listbox.itemconfig(0, fg=color)
         disconnect(connection)
 
@@ -131,10 +138,41 @@ def process_message(connection, message_json):
         #catch errors
         my_listbox.insert(0, "Error: Invalid flag")
 
+def encrypt_caesar(plaintext, shift):
+    """Encrypt the string and return the ciphertext"""
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            shift_char = chr((ord(char) + shift - 97) % 26 + 97)
+            ciphertext += shift_char
+        else:
+            ciphertext += char
+    return ciphertext
+
+def decrypt_caesar(ciphertext, shift):
+    """Decrypt the string and return the plaintext"""
+    plaintext = ""
+    for char in ciphertext:
+        if char.isalpha():
+            shift_char = chr((ord(char) - shift - 97) % 26 + 97)
+            plaintext += shift_char
+        else:
+            plaintext += char
+    return plaintext
+
+shift = 3
+
 
 def send_message(connection):
     '''Send message to client'''
-    message_packet = create_message("MESSAGE", connection.name, input_entry.get(), connection.color)
+    input_message = input_entry.get()
+    input_message = input_message.lower()
+    #print(input_message)
+    #encrypt message
+    input_message = encrypt_caesar(input_message, shift)
+    #print(input_message)
+    message_packet = create_message("MESSAGE", connection.name, input_message, connection.color, connection.id)
+    print(message_packet)
     message_json = json.dumps(message_packet)
     connection.client_socket.send(message_json.encode(connection.encoder))
     #clear input entry
@@ -179,8 +217,8 @@ port_label.grid(row=0, column=2, padx=5, pady=5)
 port_entry.grid(row=0, column=3, padx=5, pady=5)
 ip_label.grid(row=1, column=0, padx=5, pady=5)
 ip_entry.grid(row=1, column=1, padx=5, pady=1)
-connect_button.grid(row=1, column=2, padx=5, pady=1)
-disconnect_button.grid(row=1, column=3, padx=5, pady=1)
+connect_button.grid(row=1, column=2, padx=2, pady=1)
+disconnect_button.grid(row=1, column=3, padx=2, pady=1)
 
 #Color Frame layout
 color = StringVar()
@@ -193,7 +231,7 @@ green_button = tkinter.Radiobutton(color_frame, text="Green", font=my_font, bg=b
 blue_button = tkinter.Radiobutton(color_frame, text="Blue", font=my_font, bg=black, fg=light_green, variable=color, value=blue)
 purple_button = tkinter.Radiobutton(color_frame, text="Purple", font=my_font, bg=black, fg=light_green, variable=color, value=purple)
 
-color_buttons = [white_button, red_button, orange_button, yellow_button, green_button, blue_button, purple_button]
+color_buttons = [white_button, red_button, orange_button, yellow_button, green_button, blue_button] #purple_button
 
 white_button.grid(row=1, column=0, padx=0, pady=0)
 red_button.grid(row=1, column=1, padx=0, pady=0)
