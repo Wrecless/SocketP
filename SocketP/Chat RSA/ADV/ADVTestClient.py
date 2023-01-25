@@ -1,8 +1,6 @@
 import tkinter, socket, json, threading, random
 from tkinter import DISABLED, VERTICAL, END, StringVar, NORMAL
 
-id = random.randint(1000, 9999)
-
 #define window
 root = tkinter.Tk()
 root.title("Chat Room")
@@ -160,7 +158,9 @@ def decrypt_caesar(ciphertext, shift):
             plaintext += char
     return plaintext
 
+id = random.randint(1, 999)
 shift = 3
+print(shift)
 
 
 def send_message(connection):
